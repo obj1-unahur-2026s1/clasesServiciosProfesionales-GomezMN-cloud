@@ -18,5 +18,8 @@ class EmpresaDeServicios {
     method sonProfesionalesAcotados(){
         return profesionalesContratados.all({ p => p.provinciasDondePuedeTrabajar().size() < 3 })
     }
+    method puedeSatisfacer(unSolicitante){
+        return unSolicitante.puedeSerAtendidoPor(profesionalesContratados).size() >= 1
+    }
 }
 
