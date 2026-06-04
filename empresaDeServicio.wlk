@@ -4,7 +4,7 @@ import provincias.*
 class EmpresaDeServicios {
     const property profesionalesContratados
     const property honorarioDeReferencia
-
+    const clientes =  #{}
     method cuantosProfesionalesEstudiaronEn(universidad){
         return profesionalesContratados.count({p => p.universidadDondeEstudiaron() == universidad})
     }
@@ -20,6 +20,17 @@ class EmpresaDeServicios {
     }
     method puedeSatisfacer(unSolicitante){
         return unSolicitante.puedeSerAtendidoPor(profesionalesContratados).size() >= 1
+    }
+    method darServicio(unSolicitante) {
+        if (self.puedeSatisfacer(unSolicitante)){
+            unSolicitante.puedeSerAtendidoPor(profesionalesContratados).anyOne().cobrarHonorario()
+            clientes.add(unSolicitante)
+        }
+    } 
+    method cantidadDeClientes() = clientes.size()
+    method tieneAlCliente(unCliente) = clientes.contains(unCliente)
+    method esProfesionalPocoAtractivo(unProfesional){
+        return profesionalesContratados.any({p => p.provinciasDondePuedeTrabajar() == unProfesional.provinciasDondePuedeTrabajar() && p.honorariosPorHora() < unProfesional.honorariosPorHora()})
     }
 }
 

@@ -1,6 +1,7 @@
 import ProfesionalesYUniversidad.*
 import empresaDeServicio.*
 import provincias.*
+import solicitantes.*
 
 describe "etapa 1" {
   
@@ -8,27 +9,44 @@ describe "etapa 1" {
   const universidadRosario = new Universidad(ubicacionProvincia = santaFe, honorariosPorHora = 2800)
   const universidadCorrientes = new Universidad(ubicacionProvincia = corrientes, honorariosPorHora = 4200)
   const universidadHurlingham = new Universidad(ubicacionProvincia = buenosAires, honorariosPorHora = 8800)
+  const universidadMedicinaUBA = new Universidad(ubicacionProvincia = buenosAires, honorariosPorHora = 12000)
   
-  const juana = new ProfesionalUniversitario(universidadDondeEstudiaron = universidadRosario)
-  const melina = new ProfesionalLitoral(universidadDondeEstudiaron = universidadCorrientes)
-  const rocío = new ProfesionalLibre(universidadDondeEstudiaron = universidadHurlingham, honorariosPorHora = 3200, provinciasDondePuedeTrabajar = #{santaFe, cordoba, buenosAires})
-  const luciana = new ProfesionalUniversitario(universidadDondeEstudiaron = universidadRosario)
+  const juana = new ProfesionalUniversitario(universidadDondeEstudiaron = universidadRosario, dineroCobrado = 1500)
+  const melina = new ProfesionalLitoral(universidadDondeEstudiaron = universidadCorrientes, dineroCobrado = 1000)
+  const rocío = new ProfesionalLibre(dineroCobrado = 4500, universidadDondeEstudiaron = universidadHurlingham, honorariosPorHora = 3200, provinciasDondePuedeTrabajar = #{santaFe, cordoba, buenosAires})
+  const luciana = new ProfesionalUniversitario(dineroCobrado = 2500, universidadDondeEstudiaron = universidadRosario)
+  const agostina = new ProfesionalUniversitario(dineroCobrado = 5000, universidadDondeEstudiaron = universidadMedicinaUBA)
 
-  const nvidia = new EmpresaDeServicios(profesionalesContratados = #{luciana, juana, melina, rocío}, honorarioDeReferencia = 3500)
+  const nvidia = new EmpresaDeServicios(profesionalesContratados = #{luciana, juana, melina, rocío, agostina}, honorarioDeReferencia = 3500)
+  const susana = new Persona(ubicacionEnProvincias = buenosAires)
+  const uba = new Institucion(universidadesReconocidas = universidadMedicinaUBA)
+  const polideportivo = new Club(ubicacionEnProvincias = buenosAires)
 
+  method initialize() {
+    nvidia.darServicio(uba)
+
+  }
   test "nvidia tiene 2 profesionales que estudiaron en rosario, 1 en corrientes y otro en hurlingham. ninguno sanMartin" {
     assert.equals(2, nvidia.cuantosProfesionalesEstudiaronEn(universidadRosario))
     assert.equals(1, nvidia.cuantosProfesionalesEstudiaronEn(universidadCorrientes))
     assert.equals(1, nvidia.cuantosProfesionalesEstudiaronEn(universidadHurlingham))
     assert.equals(0, nvidia.cuantosProfesionalesEstudiaronEn(universidadSanMartin))
   }
-  test "nvidia tiene a #{} como profesional cara" {
-    assert.that(nvidia.profesionalesCaros() == #{})
+  test "nvidia tiene a #{agostina} como profesional cara" {
+    assert.that(nvidia.profesionalesCaros() == #{agostina})
   }
   test "nvidia tiene como universidadesFormadoras a #{universidadRosario, universidadCorrientes, universidadHurlingham}" {
-    assert.that(nvidia.universidadesFormadoras() == #{universidadRosario, universidadCorrientes, universidadHurlingham})
+    assert.that(nvidia.universidadesFormadoras() == #{universidadRosario, universidadCorrientes, universidadHurlingham, universidadMedicinaUBA})
   }
   test "nvidia tiene a luciana como profesional mas barato" {
     assert.that(nvidia.profesionalMasBarato() == luciana)
+  }
+  test "nvidia puede dar servicios a la uba" {
+    assert.equals(17000, agostina.dineroCobrado())
+  }
+  test "nvidia tiene un cliente y universidadMedicinaUBA recibe 2500 de donacion" {
+    agostina.consecuenciaDeCobro(0)
+    assert.that(nvidia.cantidadDeClientes() == 1)
+    assert.equals(8500, universidadMedicinaUBA.dineroRecibido())
   }
 }

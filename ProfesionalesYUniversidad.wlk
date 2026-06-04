@@ -6,9 +6,13 @@ class ProfesionalUniversitario {
   method provinciasDondePuedeTrabajar() = #{universidadDondeEstudiaron.ubicacionProvincia() }
   method honorariosPorHora() = universidadDondeEstudiaron.honorariosPorHora()
   method consecuenciaDeCobro(donacionRecibida){
-    universidadDondeEstudiaron.dineroRecibido(dineroCobrado / 2)
+    universidadDondeEstudiaron.recibirDonacion(dineroCobrado / 2)
     dineroCobrado = 0
   } 
+  method cobrarHonorario() {
+    dineroCobrado += self.honorariosPorHora()
+  }
+  method dineroCobrado() = dineroCobrado
 }
 class ProfesionalLitoral {
   const property universidadDondeEstudiaron
@@ -20,6 +24,10 @@ class ProfesionalLitoral {
     asociacionDeProfesionalesDelLitoral.recaudacion(dineroCobrado)
     dineroCobrado = 0
   }
+  method cobrarHonorario() {
+    dineroCobrado += self.honorariosPorHora()
+  }
+  method dineroCobrado() = dineroCobrado
 }
 class ProfesionalLibre {
   const property universidadDondeEstudiaron
@@ -36,6 +44,10 @@ class ProfesionalLibre {
       dineroCobrado -= cantidadDeDinero
     }
   }
+  method cobrarHonorario() {
+    dineroCobrado += self.honorariosPorHora()
+  }
+  method dineroCobrado() = dineroCobrado
 }
 
 class Universidad {
@@ -43,9 +55,10 @@ class Universidad {
   const property honorariosPorHora 
   var dineroRecibido = 0
 
-  method dineroRecibido(donacion){
+  method recibirDonacion(donacion){
     dineroRecibido += donacion
   }
+  method dineroRecibido() = dineroRecibido
 }
 
 object asociacionDeProfesionalesDelLitoral {

@@ -2,15 +2,15 @@ import ProfesionalesYUniversidad.*
 class Persona {
     const property ubicacionEnProvincias
 
-    method puedeSerAtendidoPor(profesionales) = profesionales.map({p => p.provinciasDondePuedeTrabajar().any({p => p == ubicacionEnProvincias})})
+    method puedeSerAtendidoPor(profesionales) = profesionales.filter({p => p.provinciasDondePuedeTrabajar() == ubicacionEnProvincias})
 }
 class Institucion {
     const property universidadesReconocidas 
 
-    method puedeSerAtendidoPor(profesionales) =  profesionales.map({p => p.universidadDondeEstudiaron().any({u => u == universidadesReconocidas})})
+    method puedeSerAtendidoPor(profesionales) =  profesionales.filter({p => p.universidadDondeEstudiaron() == universidadesReconocidas})
 }
 class Club {
     const property ubicacionEnProvincias 
 
-    method puedeSerAtendidoPor(profesionales) = profesionales.map({p => p.provinciasDondePuedeTrabajar().any({p => p == ubicacionEnProvincias})})
+    method puedeSerAtendidoPor(profesionales) = profesionales.filter({p => p.provinciasDondePuedeTrabajar() == ubicacionEnProvincias})
 }
