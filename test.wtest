@@ -1,0 +1,34 @@
+import ProfesionalesYUniversidad.*
+import empresaDeServicio.*
+import provincias.*
+
+describe "etapa 1" {
+  
+  const universidadSanMartin = new Universidad(ubicacionProvincia = buenosAires, honorariosPorHora = 3500)
+  const universidadRosario = new Universidad(ubicacionProvincia = santaFe, honorariosPorHora = 2800)
+  const universidadCorrientes = new Universidad(ubicacionProvincia = corrientes, honorariosPorHora = 4200)
+  const universidadHurlingham = new Universidad(ubicacionProvincia = buenosAires, honorariosPorHora = 8800)
+  
+  const juana = new ProfesionalUniversitario(universidadDondeEstudiaron = universidadRosario)
+  const melina = new ProfesionalLitoral(universidadDondeEstudiaron = universidadCorrientes)
+  const rocío = new ProfesionalLibre(universidadDondeEstudiaron = universidadHurlingham, honorariosPorHora = 3200, provinciasDondePuedeTrabajar = #{santaFe, cordoba, buenosAires})
+  const luciana = new ProfesionalUniversitario(universidadDondeEstudiaron = universidadRosario)
+
+  const nvidia = new EmpresaDeServicios(profesionalesContratados = #{luciana, juana, melina, rocío}, honorarioDeReferencia = 3500)
+
+  test "nvidia tiene 2 profesionales que estudiaron en rosario, 1 en corrientes y otro en hurlingham. ninguno sanMartin" {
+    assert.equals(2, nvidia.cuantosProfesionalesEstudiaronEn(universidadRosario))
+    assert.equals(1, nvidia.cuantosProfesionalesEstudiaronEn(universidadCorrientes))
+    assert.equals(1, nvidia.cuantosProfesionalesEstudiaronEn(universidadHurlingham))
+    assert.equals(0, nvidia.cuantosProfesionalesEstudiaronEn(universidadSanMartin))
+  }
+  test "nvidia tiene a #{} como profesional cara" {
+    assert.that(nvidia.profesionalesCaros() == #{})
+  }
+  test "nvidia tiene como universidadesFormadoras a #{universidadRosario, universidadCorrientes, universidadHurlingham}" {
+    assert.that(nvidia.universidadesFormadoras() == #{universidadRosario, universidadCorrientes, universidadHurlingham})
+  }
+  test "nvidia tiene a luciana como profesional mas barato" {
+    assert.that(nvidia.profesionalMasBarato() == luciana)
+  }
+}

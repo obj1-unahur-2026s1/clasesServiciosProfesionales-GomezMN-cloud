@@ -17,8 +17,8 @@ Deben contemplarse distintos tipos de profesionales, de acuerdo a lo que se indi
   pueden trabajar solamente en la provincia donde está la universidad, los honorarios son los que recomienda la universidad.
 - **Profesionales asociados del Litoral**:
   pueden trabajar en Entre Ríos, Santa Fe y Corrientes, cobran 3000 pesos por hora de trabajo.
-- **Profesionales libres**:
-  se indica para cada uno en qué provincias pueden trabajar y los honorarios por hora, además de la universidad.
+- **Profesionales libres**:los honorarios
+  se indica para ca qué provincias pueden trabajar y da uno en por hora, además de la universidad.
   
   
 Cada **empresa de servicios** contrata a varios profesionales. Para cada una se indica un honorario de referencia.
